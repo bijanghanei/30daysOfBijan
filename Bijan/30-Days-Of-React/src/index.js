@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import bijanPhoto from "./images/photo1.jpg"
 
 
-// JSX element header
+
 
 const welcome = `Welcome to 30 Days Of React`
 const title = 'Getting Started React'
@@ -13,7 +13,9 @@ const author = {
   lastName: `Ghanei`
 }
 const date = `Sep 23, 2023`
-const header = (
+
+
+const Header = () => (
   <header>
     <div className='header-wrapper'>
       <h1>{welcome}</h1>
@@ -50,16 +52,18 @@ const personAge = (
 const techs = [`HTML`,`CSS`,`JavaScript`,`Java`]
 const techFormated = techs.map((tech) => <li>{tech}</li>)
 
-const user = (
-  <div>
+const UserCard = () => (
+  <div className="user-card">
     <img className="photo" src={bijanPhoto} alt='bijan ghanei'/>
+    <h2>
+      {author.firstname} {author.lastName}
+    </h2>
   </div>
 )
 
 
 
-// JSX element main
-const main = (
+const Main = () => (
   <main>
     <div className='main-wrapper'>
       <p>
@@ -74,14 +78,14 @@ const main = (
       </ul>
       {result}
       {personAge}
-      {user}
+      <UserCard />
     </div>
   </main>
 )
 
 
-// JSX element footer
-const footer = (
+
+const Footer = () => (
   <footer>
     <div className='footer-wrapper'>
       <p>Copyright 2023</p>
@@ -90,14 +94,14 @@ const footer = (
   </footer>
 )
 
-// JSX element parent
-const app = (
+
+const App = () => (
   <div className='app'>
-    {header}
-    {main}
-    {footer}
+    <Header />
+    <Main />
+    <Footer />
   </div>
 )
 const rootElement = document.getElementById(`root`)
 
-ReactDOM.render(app, rootElement)
+ReactDOM.render(<App />, rootElement)
