@@ -4,66 +4,100 @@ import bijanPhoto from "./images/photo1.jpg"
 
 
 
+const currentDate = new Date();
 
-const welcome = `Welcome to 30 Days Of React`
-const title = 'Getting Started React'
-const subtitle = 'JavaScript Library'
-const author = {
-  firstname: `Bijan`,
-  lastName: `Ghanei`
+const showDate = (time) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
+  const month = months[time.getMonth()].slice(0, 3)
+  const year = time.getFullYear()
+  const date = time.getDate()
+  return ` ${month} ${date}, ${year}`
 }
-const date = `Sep 23, 2023`
+const timeHandler = () => {
+  alert(showDate(new Date()))
+}
+const greetingFunction = () => {
+  alert('Welcome to 30 Days Of React Challenge, 2020')
+}
+
+const Header = ({welcome,title,subtitle, firstName,lastName,date}) => {
+  return (
+    <header>
+      <div className='header-wrapper'>
+        <h1>{welcome}</h1>
+        <h2>{title}</h2>
+        <h3>{subtitle}</h3>
+        <p>
+          Author: {firstName} {lastName}
+        </p>
+        <small>Date: {showDate(date)}</small>
+      </div>
+    </header>
+  )
+}
 
 
-const Header = () => (
-  <header>
-    <div className='header-wrapper'>
-      <h1>{welcome}</h1>
-      <h2>{title}</h2>
-      <h3>{subtitle}</h3>
-      <p>
-        Author: {author.firstname} {author.lastName}
-      </p>
-      <small>Date: {date}</small>
-    </div>
-  </header>
-)
 
-const numOne = 3
-const numTwo = 2
-
-const result = (
-  <p>
-    {numOne} + {numTwo} = {numOne+numTwo}
-  </p>
-)
-
-
-const yearBorn = 1997
-const currentYear = new Date().getFullYear()
-const age = currentYear- yearBorn
-const personAge = (
-  <p>
-    {` `}
-    {author.firstname} {author.lastName} is {age} years old.
-  </p>
-)
+// const yearBorn = 1997
+// const currentYear = new Date().getFullYear()
+// const age = currentYear- yearBorn
+// const personAge = (
+//   <p>
+//     {` `}
+//     {author.firstname} {author.lastName} is {age} years old.
+//   </p>
+// )
 
 const techs = [`HTML`,`CSS`,`JavaScript`,`Java`]
-const techFormated = techs.map((tech) => <li>{tech}</li>)
+const TechList = ({items}) => {
+  return (
+    items.map((tech) => <li>{tech}</li>)
+  )
+}
 
-const UserCard = () => (
-  <div className="user-card">
-    <img className="photo" src={bijanPhoto} alt='bijan ghanei'/>
-    <h2>
-      {author.firstname} {author.lastName}
-    </h2>
-  </div>
-)
+const UserCard = ({firstName,lastName,imageSrc}) => {
+  return(
+    <div className="user-card">
+      <img className="photo" src={imageSrc} alt={`${firstName} ${lastName}`}/>
+      <h2>
+        {firstName} {lastName}
+      </h2>
+    </div>
+  )
+}
 
+const Button = ({text,onClick,style}) => {
+  return(
+    <button style={style} onClick={onClick}>{text}</button>
+  )
+} 
 
+const buttonStyles = {
+  backgroundColor: '#61dbfb',
+  padding: 10,
+  border: "none",
+  borderRadius: 5,
+  margin: 3,
+  cursor: "pointer",
+  fontSixe: 18,
+  color: "white",
+}
 
-const Main = () => (
+const Main = ({items,fName,lName,greetPeople,handleTime}) => (
   <main>
     <div className='main-wrapper'>
       <p>
@@ -74,21 +108,21 @@ const Main = () => (
         :
         </p>
       <ul>
-        {techFormated}
+        <TechList items={items}/>
       </ul>
-      {result}
-      {personAge}
-      <UserCard />
+      <UserCard firstName={fName} lastName={lName} imageSrc={bijanPhoto}/>
+      <Button text="Greet People" onClick={greetPeople} style={buttonStyles} />
+      <Button text="Show Time" onClick={handleTime} style={buttonStyles} />
     </div>
   </main>
 )
 
 
 
-const Footer = () => (
+const Footer = ({text,date}) => (
   <footer>
     <div className='footer-wrapper'>
-      <p>Copyright 2023</p>
+      <p>{text} {date.getFullYear()}</p>
     </div>
     
   </footer>
@@ -97,9 +131,16 @@ const Footer = () => (
 
 const App = () => (
   <div className='app'>
-    <Header />
-    <Main />
-    <Footer />
+    <Header 
+      welcome='Welcome to 30 Days Of React'
+      title='Getting Started React'
+      subtitle='JavaScript Library'
+      firstName="Bijan"
+      lastName="Ghanei"
+      date= {currentDate}
+    />
+    <Main items={techs} fName="Bijan" lName="Ghanei" handleTime={timeHandler} greetPeople={greetingFunction}/>
+    <Footer text="Copyright" date={currentDate} />
   </div>
 )
 const rootElement = document.getElementById(`root`)
